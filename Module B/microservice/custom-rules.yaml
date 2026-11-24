@@ -1,0 +1,93 @@
+rules:
+  - id: bank-insecure-header-auth
+    pattern: Header(...)
+    message: "Идентификация пользователя по недоверенному HTTP-заголовку X-User-Id без криптографической проверки (Broken Authentication / CWE-287)."
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-287: Improper Authentication"
+      owasp: "A07:2021 - Identification and Authentication Failures"
+
+  - id: bank-dynamic-sql-fstring
+    pattern-regex: 'sql\s*\+=\s*f"'
+    message: "Динамическая сборка SQL-запроса через f-string перед передачей в asyncpg fetch (риск SQL Injection / CWE-89)."
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-89: SQL Injection"
+      owasp: "A03:2021 - Injection"
+
+  - id: bank-transfer-race-condition
+    pattern: |
+      async with $CONN.transaction():
+        ...
+        $BAL = await $CONN.fetchval("SELECT balance_cents FROM accounts WHERE id=$1", ...)
+        ...
+        await $CONN.execute("UPDATE accounts SET balance_cents = balance_cents - $1 WHERE id=$2", ...)
+    message: "Проверка баланса перед списанием без блокировки строки FOR UPDATE (Race Condition / Double Spending / CWE-362)."
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-362: Concurrent Execution using Shared Resource with Improper Synchronization"
+
+  - id: bank-broken-redis-cache-return
+    pattern: |
+      $CACHED = await $R.get($KEY)
+      if $CACHED:
+        return []
+    message: "При наличии ключа в Redis возвращается пустой список [] (логическая ошибка и риск DoS через Cache Poisoning)."
+    languages: [python]
+    severity: WARNING
+    metadata:
+      cwe: "CWE-400: Uncontrolled Resource Consumption"
+
+  - id: bank-unencrypted-redis-client
+    pattern: redis.from_url(...)
+    message: "Подключение к Redis без принудительного TLS (rediss://) и аутентификации (CWE-319 / CWE-306)."
+    languages: [python]
+    severity: WARNING
+    metadata:
+      cwe: "CWE-319: Cleartext Transmission of Sensitive Information"
+
+  - id: bank-postgres-no-ssl
+    patterns:
+      - pattern: asyncpg.create_pool(...)
+      - pattern-not: asyncpg.create_pool(..., ssl=..., ...)
+    message: "Подключение к PostgreSQL без явного требования TLS (параметр ssl не задан, CWE-319)."
+    languages: [python]
+    severity: WARNING
+    metadata:
+      cwe: "CWE-319: Cleartext Transmission of Sensitive Information"
+
+  - id: bank-fastapi-docs-exposed
+    patterns:
+      - pattern: FastAPI(...)
+      - pattern-not: FastAPI(..., docs_url=None, ...)
+    message: "Интерактивная документация Swagger UI (/docs) включена по умолчанию и раскрывает схему API (CWE-200)."
+    languages: [python]
+    severity: INFO
+    metadata:
+      cwe: "CWE-200: Exposure of Sensitive Information to an Unauthorized Actor"
+
+  - id: bank-hardcoded-postgres-password
+    pattern: |
+      POSTGRES_PASSWORD: postgres
+    message: "Жестко заданный пароль по умолчанию для PostgreSQL в docker-compose.yml (CWE-798)."
+    languages: [yaml]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-798: Use of Hard-coded Credentials"
+
+  - id: bank-exposed-db-redis-ports
+    pattern-either:
+      - pattern: |
+          ports:
+            - "5432:5432"
+      - pattern: |
+          ports:
+            - "6379:6379"
+    message: "Внутренний сервис (PostgreSQL/Redis) опубликован наружу в docker-compose.yml (CWE-284)."
+    languages: [yaml]
+    severity: WARNING
+    metadata:
+      cwe: "CWE-284: Improper Access Control"

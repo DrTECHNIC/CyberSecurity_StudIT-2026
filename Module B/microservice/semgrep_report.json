@@ -1,0 +1,619 @@
+{
+  "version": "1.187.0",
+  "results": [
+    {
+      "check_id": "bank-transfer-race-condition",
+      "path": "app/crud.py",
+      "start": {
+        "line": 21,
+        "col": 20,
+        "offset": 706
+      },
+      "end": {
+        "line": 38,
+        "col": 14,
+        "offset": 1700
+      },
+      "extra": {
+        "message": "Проверка баланса перед списанием без блокировки строки FOR UPDATE (Race Condition / Double Spending / CWE-362).",
+        "metadata": {
+          "cwe": "CWE-362: Concurrent Execution using Shared Resource with Improper Synchronization"
+        },
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "bank-broken-redis-cache-return",
+      "path": "app/crud.py",
+      "start": {
+        "line": 46,
+        "col": 5,
+        "offset": 1915
+      },
+      "end": {
+        "line": 48,
+        "col": 18,
+        "offset": 1979
+      },
+      "extra": {
+        "message": "При наличии ключа в Redis возвращается пустой список [] (логическая ошибка и риск DoS через Cache Poisoning).",
+        "metadata": {
+          "cwe": "CWE-400: Uncontrolled Resource Consumption"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "bank-dynamic-sql-fstring",
+      "path": "app/crud.py",
+      "start": {
+        "line": 61,
+        "col": 13,
+        "offset": 2351
+      },
+      "end": {
+        "line": 61,
+        "col": 22,
+        "offset": 2360
+      },
+      "extra": {
+        "message": "Динамическая сборка SQL-запроса через f-string перед передачей в asyncpg fetch (риск SQL Injection / CWE-89).",
+        "metadata": {
+          "cwe": "CWE-89: SQL Injection",
+          "owasp": "A03:2021 - Injection"
+        },
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "bank-dynamic-sql-fstring",
+      "path": "app/crud.py",
+      "start": {
+        "line": 64,
+        "col": 9,
+        "offset": 2464
+      },
+      "end": {
+        "line": 64,
+        "col": 18,
+        "offset": 2473
+      },
+      "extra": {
+        "message": "Динамическая сборка SQL-запроса через f-string перед передачей в asyncpg fetch (риск SQL Injection / CWE-89).",
+        "metadata": {
+          "cwe": "CWE-89: SQL Injection",
+          "owasp": "A03:2021 - Injection"
+        },
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "bank-postgres-no-ssl",
+      "path": "app/db.py",
+      "start": {
+        "line": 9,
+        "col": 23,
+        "offset": 160
+      },
+      "end": {
+        "line": 9,
+        "col": 98,
+        "offset": 235
+      },
+      "extra": {
+        "message": "Подключение к PostgreSQL без явного требования TLS (параметр ssl не задан, CWE-319).",
+        "metadata": {
+          "cwe": "CWE-319: Cleartext Transmission of Sensitive Information"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "bank-fastapi-docs-exposed",
+      "path": "app/main.py",
+      "start": {
+        "line": 7,
+        "col": 7,
+        "offset": 174
+      },
+      "end": {
+        "line": 7,
+        "col": 41,
+        "offset": 208
+      },
+      "extra": {
+        "message": "Интерактивная документация Swagger UI (/docs) включена по умолчанию и раскрывает схему API (CWE-200).",
+        "metadata": {
+          "cwe": "CWE-200: Exposure of Sensitive Information to an Unauthorized Actor"
+        },
+        "severity": "INFO",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "bank-unencrypted-redis-client",
+      "path": "app/redis_client.py",
+      "start": {
+        "line": 9,
+        "col": 19,
+        "offset": 192
+      },
+      "end": {
+        "line": 9,
+        "col": 76,
+        "offset": 249
+      },
+      "extra": {
+        "message": "Подключение к Redis без принудительного TLS (rediss://) и аутентификации (CWE-319 / CWE-306).",
+        "metadata": {
+          "cwe": "CWE-319: Cleartext Transmission of Sensitive Information"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "bank-insecure-header-auth",
+      "path": "app/security.py",
+      "start": {
+        "line": 3,
+        "col": 55,
+        "offset": 97
+      },
+      "end": {
+        "line": 3,
+        "col": 75,
+        "offset": 117
+      },
+      "extra": {
+        "message": "Идентификация пользователя по недоверенному HTTP-заголовку X-User-Id без криптографической проверки (Broken Authentication / CWE-287).",
+        "metadata": {
+          "cwe": "CWE-287: Improper Authentication",
+          "owasp": "A07:2021 - Identification and Authentication Failures"
+        },
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "yaml.docker-compose.security.no-new-privileges.no-new-privileges",
+      "path": "docker-compose.yml",
+      "start": {
+        "line": 4,
+        "col": 3,
+        "offset": 28
+      },
+      "end": {
+        "line": 4,
+        "col": 11,
+        "offset": 36
+      },
+      "extra": {
+        "message": "Service 'postgres' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this.",
+        "metadata": {
+          "cwe": [
+            "CWE-732: Incorrect Permission Assignment for Critical Resource"
+          ],
+          "owasp": [
+            "A05:2021 - Security Misconfiguration",
+            "A06:2017 - Security Misconfiguration",
+            "A02:2025 - Security Misconfiguration"
+          ],
+          "references": [
+            "https://raesene.github.io/blog/2019/06/01/docker-capabilities-and-no-new-privs/",
+            "https://www.kernel.org/doc/Documentation/prctl/no_new_privs.txt",
+            "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-4-add-no-new-privileges-flag"
+          ],
+          "category": "security",
+          "technology": [
+            "docker-compose"
+          ],
+          "cwe2021-top25": true,
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "HIGH",
+          "confidence": "LOW",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Improper Authorization"
+          ],
+          "source": "https://semgrep.dev/r/yaml.docker-compose.security.no-new-privileges.no-new-privileges",
+          "shortlink": "https://sg.run/0n8q"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "yaml.docker-compose.security.writable-filesystem-service.writable-filesystem-service",
+      "path": "docker-compose.yml",
+      "start": {
+        "line": 4,
+        "col": 3,
+        "offset": 28
+      },
+      "end": {
+        "line": 4,
+        "col": 11,
+        "offset": 36
+      },
+      "extra": {
+        "message": "Service 'postgres' is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add 'read_only: true' to this service to prevent this.",
+        "metadata": {
+          "cwe": [
+            "CWE-732: Incorrect Permission Assignment for Critical Resource"
+          ],
+          "owasp": [
+            "A05:2021 - Security Misconfiguration",
+            "A06:2017 - Security Misconfiguration",
+            "A02:2025 - Security Misconfiguration"
+          ],
+          "references": [
+            "https://docs.docker.com/compose/compose-file/compose-file-v3/#domainname-hostname-ipc-mac_address-privileged-read_only-shm_size-stdin_open-tty-user-working_dir",
+            "https://blog.atomist.com/security-of-docker-kubernetes/",
+            "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-8-set-filesystem-and-volumes-to-read-only"
+          ],
+          "category": "security",
+          "technology": [
+            "docker-compose"
+          ],
+          "cwe2021-top25": true,
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "HIGH",
+          "confidence": "LOW",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Improper Authorization"
+          ],
+          "source": "https://semgrep.dev/r/yaml.docker-compose.security.writable-filesystem-service.writable-filesystem-service",
+          "shortlink": "https://sg.run/e4JE"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "bank-hardcoded-postgres-password",
+      "path": "docker-compose.yml",
+      "start": {
+        "line": 7,
+        "col": 7,
+        "offset": 84
+      },
+      "end": {
+        "line": 7,
+        "col": 34,
+        "offset": 111
+      },
+      "extra": {
+        "message": "Жестко заданный пароль по умолчанию для PostgreSQL в docker-compose.yml (CWE-798).",
+        "metadata": {
+          "cwe": "CWE-798: Use of Hard-coded Credentials"
+        },
+        "severity": "ERROR",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "bank-exposed-db-redis-ports",
+      "path": "docker-compose.yml",
+      "start": {
+        "line": 10,
+        "col": 5,
+        "offset": 170
+      },
+      "end": {
+        "line": 11,
+        "col": 20,
+        "offset": 196
+      },
+      "extra": {
+        "message": "Внутренний сервис (PostgreSQL/Redis) опубликован наружу в docker-compose.yml (CWE-284).",
+        "metadata": {
+          "cwe": "CWE-284: Improper Access Control"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "yaml.docker-compose.security.no-new-privileges.no-new-privileges",
+      "path": "docker-compose.yml",
+      "start": {
+        "line": 15,
+        "col": 3,
+        "offset": 253
+      },
+      "end": {
+        "line": 15,
+        "col": 8,
+        "offset": 258
+      },
+      "extra": {
+        "message": "Service 'redis' allows for privilege escalation via setuid or setgid binaries. Add 'no-new-privileges:true' in 'security_opt' to prevent this.",
+        "metadata": {
+          "cwe": [
+            "CWE-732: Incorrect Permission Assignment for Critical Resource"
+          ],
+          "owasp": [
+            "A05:2021 - Security Misconfiguration",
+            "A06:2017 - Security Misconfiguration",
+            "A02:2025 - Security Misconfiguration"
+          ],
+          "references": [
+            "https://raesene.github.io/blog/2019/06/01/docker-capabilities-and-no-new-privs/",
+            "https://www.kernel.org/doc/Documentation/prctl/no_new_privs.txt",
+            "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-4-add-no-new-privileges-flag"
+          ],
+          "category": "security",
+          "technology": [
+            "docker-compose"
+          ],
+          "cwe2021-top25": true,
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "HIGH",
+          "confidence": "LOW",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Improper Authorization"
+          ],
+          "source": "https://semgrep.dev/r/yaml.docker-compose.security.no-new-privileges.no-new-privileges",
+          "shortlink": "https://sg.run/0n8q"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "yaml.docker-compose.security.writable-filesystem-service.writable-filesystem-service",
+      "path": "docker-compose.yml",
+      "start": {
+        "line": 15,
+        "col": 3,
+        "offset": 253
+      },
+      "end": {
+        "line": 15,
+        "col": 8,
+        "offset": 258
+      },
+      "extra": {
+        "message": "Service 'redis' is running with a writable root filesystem. This may allow malicious applications to download and run additional payloads, or modify container files. If an application inside a container has to save something temporarily consider using a tmpfs. Add 'read_only: true' to this service to prevent this.",
+        "metadata": {
+          "cwe": [
+            "CWE-732: Incorrect Permission Assignment for Critical Resource"
+          ],
+          "owasp": [
+            "A05:2021 - Security Misconfiguration",
+            "A06:2017 - Security Misconfiguration",
+            "A02:2025 - Security Misconfiguration"
+          ],
+          "references": [
+            "https://docs.docker.com/compose/compose-file/compose-file-v3/#domainname-hostname-ipc-mac_address-privileged-read_only-shm_size-stdin_open-tty-user-working_dir",
+            "https://blog.atomist.com/security-of-docker-kubernetes/",
+            "https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html#rule-8-set-filesystem-and-volumes-to-read-only"
+          ],
+          "category": "security",
+          "technology": [
+            "docker-compose"
+          ],
+          "cwe2021-top25": true,
+          "subcategory": [
+            "audit"
+          ],
+          "likelihood": "LOW",
+          "impact": "HIGH",
+          "confidence": "LOW",
+          "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+          "vulnerability_class": [
+            "Improper Authorization"
+          ],
+          "source": "https://semgrep.dev/r/yaml.docker-compose.security.writable-filesystem-service.writable-filesystem-service",
+          "shortlink": "https://sg.run/e4JE"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "bank-exposed-db-redis-ports",
+      "path": "docker-compose.yml",
+      "start": {
+        "line": 17,
+        "col": 5,
+        "offset": 283
+      },
+      "end": {
+        "line": 18,
+        "col": 20,
+        "offset": 309
+      },
+      "extra": {
+        "message": "Внутренний сервис (PostgreSQL/Redis) опубликован наружу в docker-compose.yml (CWE-284).",
+        "metadata": {
+          "cwe": "CWE-284: Improper Access Control"
+        },
+        "severity": "WARNING",
+        "fingerprint": "requires login",
+        "lines": "requires login",
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      }
+    },
+    {
+      "check_id": "manual.security.idor-bola-account-access",
+      "path": "app/crud.py",
+      "start": {
+        "line": 15,
+        "col": 1,
+        "offset": 350
+      },
+      "end": {
+        "line": 41,
+        "col": 22,
+        "offset": 1460
+      },
+      "extra": {
+        "message": "IDOR / BOLA (Insecure Direct Object Reference): операции перевода средств (POST /transfer) и просмотра истории (GET /transactions) опираются на идентификатор пользователя из недоверенного заголовка X-User-Id (app/security.py) и прямые числовые ID счетов (from_account_id, to_account_id). Подмена X-User-Id обходит проверку _must_own_account и открывает доступ к чужим счетам и транзакциям; ответы 404 по to_account_id позволяют перебирать чужие счета.",
+        "severity": "ERROR",
+        "lines": "async def transfer(user_id: int, from_id: int, to_id: int, amount: int) -> int:",
+        "metadata": {
+          "category": "security",
+          "cwe": [
+            "CWE-639: Authorization Bypass Through User-Controlled Key"
+          ],
+          "owasp": [
+            "API1:2023 - Broken Object Level Authorization",
+            "A01:2021 - Broken Access Control"
+          ],
+          "source": "manual-review",
+          "confidence": "HIGH",
+          "impact": "HIGH"
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "app/config.py",
+      "app/crud.py",
+      "app/db.py",
+      "app/main.py",
+      "app/redis_client.py",
+      "app/schemas.py",
+      "app/security.py",
+      "docker-compose.yml",
+      "requirements.txt",
+      "semgrep_report.json"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 0.7034261226654053,
+    "profiling_times": {
+      "config_time": 3.0977377891540527,
+      "core_time": 7.4208667278289795,
+      "ignores_time": 0.0024993419647216797,
+      "total_time": 10.746825933456421
+    },
+    "parsing_time": {
+      "total_time": 0.22376751899719238,
+      "per_file_time": {
+        "mean": 0.0040685003454034975,
+        "std_dev": 9.050015976889663e-05
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_files": []
+    },
+    "scanning_time": {
+      "total_time": 0.6276369094848633,
+      "per_file_time": {
+        "mean": 0.02164265205120218,
+        "std_dev": 0.0003854631232081599
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_files": []
+    },
+    "matching_time": {
+      "total_time": 0.07461762428283691,
+      "per_file_and_rule_time": {
+        "mean": 0.0013566840778697618,
+        "std_dev": 8.84480162109739e-06
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_rules_on_files": []
+    },
+    "tainting_time": {
+      "total_time": 0.004857301712036133,
+      "per_def_and_rule_time": {
+        "mean": 0.00024286508560180664,
+        "std_dev": 1.7821098069248365e-07
+      },
+      "very_slow_stats": {
+        "time_ratio": 0.0,
+        "count_ratio": 0.0
+      },
+      "very_slow_rules_on_defs": []
+    },
+    "fixpoint_timeouts": [],
+    "prefiltering": {
+      "project_level_time": 0.0,
+      "file_level_time": 0.0,
+      "rules_with_project_prefilters_ratio": 0.0,
+      "rules_with_file_prefilters_ratio": 0.966414777497901,
+      "rules_selected_ratio": 0.04869857262804366,
+      "rules_matched_ratio": 0.04869857262804366
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 581401792
+  },
+  "engine_requested": "OSS",
+  "skipped_rules": [],
+  "profiling_results": []
+}

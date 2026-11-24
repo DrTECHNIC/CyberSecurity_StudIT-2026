@@ -1,0 +1,904 @@
+{
+  "version": "2.6.2",
+  "summary": {
+    "title": "Модель угроз банковского микросервиса",
+    "owner": "Враженко Даниил Олегович",
+    "description": "Банковский микросервис на FastAPI, PostgreSQL и Redis для перевода средств между счетами и просмотра истории транзакций",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "DFD",
+        "diagramType": "STRIDE",
+        "placeholder": "Архитектура и потоки данных банковского микросервиса",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.6.2",
+        "cells": [
+          {
+            "position": {
+              "x": 410,
+              "y": 50
+            },
+            "size": {
+              "width": 260,
+              "height": 460
+            },
+            "attrs": {
+              "label": {
+                "text": "Внешний периметр"
+              },
+              "headerText": {
+                "text": "Bank App Zone (DMZ)"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": 0,
+            "id": "a1b2c3d4-0091-4000-8000-000000000091",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Внешний периметр",
+              "description": "Разделяет недоверенную внешнюю сеть (клиента) и зону приложения (Backend API).",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false,
+              "containedElements": [
+                "a1b2c3d4-0002-4000-8000-000000000002"
+              ],
+              "crossingFlows": [
+                "a1b2c3d4-0011-4000-8000-000000000011",
+                "a1b2c3d4-0012-4000-8000-000000000012",
+                "a1b2c3d4-0013-4000-8000-000000000013",
+                "a1b2c3d4-0016-4000-8000-000000000016",
+                "a1b2c3d4-0015-4000-8000-000000000015"
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 750,
+              "y": 50
+            },
+            "size": {
+              "width": 280,
+              "height": 460
+            },
+            "attrs": {
+              "label": {
+                "text": "Граница слоя данных"
+              },
+              "headerText": {
+                "text": "Data Layer (Storage Zone)"
+              }
+            },
+            "visible": true,
+            "shape": "trust-boundary-box",
+            "zIndex": 0,
+            "id": "a1b2c3d4-0092-4000-8000-000000000092",
+            "data": {
+              "type": "tm.BoundaryBox",
+              "name": "Граница слоя данных",
+              "description": "Разделяет зону приложения (Backend API) и внутренние хранилища (PostgreSQL, Redis).",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false,
+              "containedElements": [
+                "a1b2c3d4-0003-4000-8000-000000000003",
+                "a1b2c3d4-0004-4000-8000-000000000004"
+              ],
+              "crossingFlows": [
+                "a1b2c3d4-0016-4000-8000-000000000016",
+                "a1b2c3d4-0015-4000-8000-000000000015"
+              ]
+            }
+          },
+          {
+            "position": {
+              "x": 40,
+              "y": 230
+            },
+            "size": {
+              "width": 150,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "Пользователь"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 1,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "55b653f6-d699-4f13-9458-57854208b165"
+                },
+                {
+                  "group": "right",
+                  "id": "c93ca6a7-7ec5-4605-8d4e-dd4bfeac845b"
+                },
+                {
+                  "group": "bottom",
+                  "id": "8b22e4e9-a689-41b9-9030-a0b7e8fc3641"
+                },
+                {
+                  "group": "left",
+                  "id": "298b5d54-bc8c-4ecf-9354-e650ec08db4a"
+                }
+              ]
+            },
+            "id": "a1b2c3d4-0001-4000-8000-000000000001",
+            "data": {
+              "type": "tm.Actor",
+              "name": "Пользователь",
+              "description": "Клиент банка. Отправляет HTTP-запросы на перевод средств и просмотр истории операций, передавая идентификатор в заголовке X-User-Id.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "providesAuthentication": false,
+              "threats": []
+            }
+          },
+          {
+            "position": {
+              "x": 465,
+              "y": 205
+            },
+            "size": {
+              "width": 150,
+              "height": 150
+            },
+            "attrs": {
+              "text": {
+                "text": "Backend API (FastAPI)"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 2,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "35f0cee7-7685-494e-a832-f76d4d3530f8"
+                },
+                {
+                  "group": "right",
+                  "id": "63eff108-2674-4051-a8ac-f566f80a05f6"
+                },
+                {
+                  "group": "bottom",
+                  "id": "fdb73200-d2c6-4959-b231-ad8103e30d76"
+                },
+                {
+                  "group": "left",
+                  "id": "9cba0e66-6f2f-420f-9999-c65b010f3afd"
+                }
+              ]
+            },
+            "id": "a1b2c3d4-0002-4000-8000-000000000002",
+            "data": {
+              "type": "tm.Process",
+              "name": "Backend API (FastAPI)",
+              "description": "REST API микросервиса (порт 8000). Проверяет X-User-Id и формат данных, управляет переводами и выборкой истории транзакций.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "privilegeLevel": "",
+              "threats": [
+                {
+                  "id": "t1b2c3d4-0001-4000-8000-000000000001",
+                  "title": "Обход аутентификации и IDOR / BOLA (подмена X-User-Id)",
+                  "status": "Open",
+                  "severity": "Critical",
+                  "type": "Elevation of privilege",
+                  "description": "Идентификация в app/security.py строится только на недоверенном заголовке X-User-Id без JWT и подписи. Подмена заголовка обходит проверку _must_own_account() в app/crud.py и открывает доступ к чужим счетам и истории операций.\n- Поверхность атаки: публичные HTTP-эндпоинты POST /transfer и GET /transactions (порт 8000).\n- Импакт: критический — несанкционированный вывод средств с любых счетов и чтение чужих транзакций.\n- Влияние на бизнес: прямые финансовые потери, нарушение банковской тайны (152-ФЗ, требования ЦБ РФ), штрафы и репутационный ущерб.\n\nCVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N — эксплуатация по сети без прав и взаимодействия с пользователем, полное нарушение конфиденциальности и целостности.",
+                  "mitigation": "- Техническая (код): заменить X-User-Id на проверку подписанного JWT/OAuth2-токена, проверять владельца счета внутри транзакции БД, унифицировать ошибки 403/404. Снижает риск подмены пользователя, IDOR и перебора счетов.\n- Архитектурная (инфраструктура): вынести аутентификацию на API Gateway / IdP, изолировать API во внутреннем контуре с mTLS. Исключает передачу внутренних заголовков извне.\n- Процессная (процесс): внедрить автотесты на IDOR/BOLA в CI/CD и обязательный Security Code Review. Предотвращает попадание ошибок авторизации в продакшен.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 1,
+                  "score": "9.1 (CVSS 3.1)"
+                }
+              ],
+              "threatFrequency": {
+                "spoofing": 0,
+                "tampering": 0,
+                "repudiation": 0,
+                "informationDisclosure": 0,
+                "denialOfService": 0,
+                "elevationOfPrivilege": 6
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 805,
+              "y": 120
+            },
+            "size": {
+              "width": 170,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "PostgreSQL"
+              },
+              "body": {
+                "stroke": "#e53935",
+                "strokeWidth": 3
+              },
+              "topLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 2,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "1a75f43e-1538-4fbe-86df-8d50b65c763d"
+                },
+                {
+                  "group": "right",
+                  "id": "3db7a746-c7a7-48f4-976a-184bde7409f9"
+                },
+                {
+                  "group": "bottom",
+                  "id": "9693eadf-4502-461d-a624-00e1e19c7dba"
+                },
+                {
+                  "group": "left",
+                  "id": "46d5ce9c-dd92-422c-9c1e-8eaae9422b18"
+                }
+              ]
+            },
+            "id": "a1b2c3d4-0003-4000-8000-000000000003",
+            "data": {
+              "type": "tm.Store",
+              "name": "PostgreSQL",
+              "description": "Основная реляционная БД (bank, порт 5432). Хранит счета и балансы (accounts), а также журнал переводов (transactions).",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "threats": [
+                {
+                  "id": "t1b2c3d4-0003-4000-8000-000000000003",
+                  "title": "Компрометация БД и кэша, отсутствие TLS и риск SQL-инъекции",
+                  "status": "Open",
+                  "severity": "Critical",
+                  "type": "Information disclosure",
+                  "description": "В docker-compose.yml порты PostgreSQL (5432) и Redis (6379) открыты наружу, пароль БД задан открытым текстом (postgres:postgres), Redis не требует пароль, а весь трафик идет без TLS. В app/crud.py SQL собирается через f-string (риск SQLi при доработках), а при попадании в кэш Redis возвращается пустой список [] (риск Cache Poisoning / DoS).\n- Поверхность атаки: открытые порты 5432/6379/8000, перехват трафика (MitM), параметр search в GET /transactions.\n- Импакт: высокий/критический — прямой доступ к базе клиентов, перехват данных, скрытие истории операций.\n- Влияние на бизнес: массовая утечка финансовых и персональных данных, недоступность сервиса истории (нарушение SLA) и штрафы регуляторов.\n\nCVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H — открытые порты БД и кэша с дефолтными/пустыми паролями дают полный удаленный контроль над данными и доступностью сервиса.",
+                  "mitigation": "- Техническая (код): убрать f-string из SQL (использовать статические параметризованные запросы/ORM), включить TLS для БД (sslmode=require) и Redis (rediss://), исправить работу с кэшем, отключить тестовый seed в prod. Снижает риск SQLi, перехвата и DoS.\n- Архитектурная (инфраструктура): закрыть порты 5432/6379 от внешнего доступа (приватная сеть), включить пароль и ACL в Redis, перенести секреты в Vault/KMS, терминировать HTTPS на Reverse Proxy. Исключает прямой доступ к хранилищам и утечку кредов.\n- Процессная (процесс): настроить в CI/CD SAST (Semgrep), поиск секретов (Gitleaks) и проверку IaC (Trivy/Checkov) с блокировкой мержа, ввести ротацию секретов. Не допускает небезопасных конфигов и паролей в репозитории.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 3,
+                  "score": "9.8 (CVSS 3.1)"
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 0,
+                "repudiation": 0,
+                "informationDisclosure": 5,
+                "denialOfService": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 805,
+              "y": 360
+            },
+            "size": {
+              "width": 170,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "Redis"
+              },
+              "topLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 2,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "187531ee-0a7f-4585-ab23-ce615a99e751"
+                },
+                {
+                  "group": "right",
+                  "id": "f04a744f-edd6-40d1-bfdc-d77cdd36050c"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c6163baa-db75-4d82-b5f3-404eb21b07b3"
+                },
+                {
+                  "group": "left",
+                  "id": "258146e4-5a89-426c-8d0c-948602c91ca4"
+                }
+              ]
+            },
+            "id": "a1b2c3d4-0004-4000-8000-000000000004",
+            "data": {
+              "type": "tm.Store",
+              "name": "Redis",
+              "description": "Сервер кэширования (порт 6379). Хранит кэш истории транзакций по ключам tx:{user_id}:.... Работает без аутентификации и TLS.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "threats": []
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Запрос на перевод (POST /transfer)",
+              "description": "HTTP без TLS. Передает заголовок X-User-Id и JSON с полями from_account_id, to_account_id, amount_cents.",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": true,
+              "protocol": "HTTP",
+              "threats": [],
+              "trustBoundaryIds": [
+                "a1b2c3d4-0091-4000-8000-000000000091"
+              ]
+            },
+            "labels": [
+              "Запрос на перевод (POST /transfer)"
+            ],
+            "id": "a1b2c3d4-0011-4000-8000-000000000011",
+            "source": {
+              "cell": "a1b2c3d4-0001-4000-8000-000000000001"
+            },
+            "target": {
+              "cell": "a1b2c3d4-0002-4000-8000-000000000002"
+            },
+            "vertices": [
+              {
+                "x": 330,
+                "y": 240
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "HTTP-ответы API",
+              "description": "HTTP без TLS. Возвращает ID созданной транзакции, JSON-список операций или коды ошибок (400/401/403/404).",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": true,
+              "protocol": "HTTP",
+              "threats": [],
+              "trustBoundaryIds": [
+                "a1b2c3d4-0091-4000-8000-000000000091"
+              ]
+            },
+            "labels": [
+              "HTTP-ответы API"
+            ],
+            "id": "a1b2c3d4-0012-4000-8000-000000000012",
+            "source": {
+              "cell": "a1b2c3d4-0002-4000-8000-000000000002"
+            },
+            "target": {
+              "cell": "a1b2c3d4-0001-4000-8000-000000000001"
+            },
+            "vertices": [
+              {
+                "x": 330,
+                "y": 320
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Запрос истории (GET /transactions)",
+              "description": "HTTP без TLS. Передает заголовок X-User-Id и query-параметры limit, search.",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": true,
+              "protocol": "HTTP",
+              "threats": [],
+              "trustBoundaryIds": [
+                "a1b2c3d4-0091-4000-8000-000000000091"
+              ]
+            },
+            "labels": [
+              "Запрос истории (GET /transactions)"
+            ],
+            "id": "a1b2c3d4-0013-4000-8000-000000000013",
+            "source": {
+              "cell": "a1b2c3d4-0001-4000-8000-000000000001"
+            },
+            "target": {
+              "cell": "a1b2c3d4-0002-4000-8000-000000000002"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Операции с кэшем (RESP)",
+              "description": "TCP/6379 без пароля и TLS. Чтение кэша (GET) при запросе истории и попытка удаления (DEL) после перевода.",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "RESP (TCP/6379)",
+              "threats": [],
+              "trustBoundaryIds": [
+                "a1b2c3d4-0091-4000-8000-000000000091",
+                "a1b2c3d4-0092-4000-8000-000000000092"
+              ]
+            },
+            "labels": [
+              "Операции с кэшем (RESP)"
+            ],
+            "id": "a1b2c3d4-0016-4000-8000-000000000016",
+            "source": {
+              "cell": "a1b2c3d4-0002-4000-8000-000000000002"
+            },
+            "target": {
+              "cell": "a1b2c3d4-0004-4000-8000-000000000004"
+            },
+            "vertices": [
+              {
+                "x": 780,
+                "y": 390
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "SQL-запросы (asyncpg)",
+              "description": "TCP/5432 без TLS. Проверка владельца и баланса счета (SELECT), списание/зачисление (UPDATE), запись (INSERT) и чтение истории транзакций.",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "TCP/5432 (PostgreSQL)",
+              "threats": [
+                {
+                  "id": "t1b2c3d4-0002-4000-8000-000000000002",
+                  "title": "Состояние гонки при переводе средств (Race Condition / Double Spending)",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Tampering",
+                  "description": "В app/crud.py баланс проверяется через SELECT без блокировки строки FOR UPDATE, а в app/db.py нет CHECK (balance_cents >= 0). Параллельные запросы проходят проверку одновременно и списывают сумму повторно.\n- Поверхность атаки: эндпоинт POST /transfer (отсутствуют rate limiting и ключ идемпотентности).\n- Импакт: критический — двойное списание, уход счета в минус и нарушение целостности финансового учета.\n- Влияние на бизнес: прямые убытки банка, расхождение бухгалтерского баланса и остановка расчетов на время ручной сверки.\n\nCVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:H — эксплуатация по сети при наличии учетной записи, критическое нарушение целостности баланса и доступности расчетов.",
+                  "mitigation": "- Техническая (код / БД): использовать SELECT ... FOR UPDATE (или SERIALIZABLE), добавить в БД CHECK (balance_cents >= 0) и FOREIGN KEY, проверять from_id != to_id, внедрить Idempotency-Key. Исключает двойное списание и некорректные проводки.\n- Архитектурная (инфраструктура): включить Rate Limiting на API Gateway/WAF и аудит-логирование переводов в SIEM. Ограничивает параллельные атаки и ускоряет выявление аномалий.\n- Процессная (процесс): добавить concurrency-тесты платежей перед релизом и регулярную автосверку балансов (reconciliation). Своевременно выявляет гонки и расхождения.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 2,
+                  "score": "8.1 (CVSS 3.1)"
+                }
+              ],
+              "trustBoundaryIds": [
+                "a1b2c3d4-0091-4000-8000-000000000091",
+                "a1b2c3d4-0092-4000-8000-000000000092"
+              ],
+              "threatFrequency": {
+                "tampering": 5,
+                "informationDisclosure": 0,
+                "denialOfService": 0
+              }
+            },
+            "labels": [
+              "SQL-запросы (asyncpg)"
+            ],
+            "id": "a1b2c3d4-0015-4000-8000-000000000015",
+            "source": {
+              "cell": "a1b2c3d4-0002-4000-8000-000000000002"
+            },
+            "target": {
+              "cell": "a1b2c3d4-0003-4000-8000-000000000003"
+            },
+            "vertices": [
+              {
+                "x": 770,
+                "y": 200
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "diagramTop": 1,
+    "reviewer": "",
+    "threatTop": 3
+  }
+}
